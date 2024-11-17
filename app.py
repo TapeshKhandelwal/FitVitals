@@ -28,6 +28,11 @@ def main():
     """
     # Page configuration
     st.set_page_config(page_title="FitVitals", layout="centered")
+
+    # Add an image at the top for a professional look
+    st.image("FitVitalsLogo.jpg", use_column_width=True)  # Ensure this file is in the same directory or provide a correct path
+
+    # Application title
     st.title("Health Assessment Tool")
     
     # Collect user inputs for health metrics
@@ -58,22 +63,22 @@ def main():
             f"- Height: {height} cm\n\n"
             f"### Health Status Categorization\n"
             f"Define the user's health status risk level based on the following criteria:\n"
-            f"1. *BMI (Body Mass Index)*:\n"
+            f"1. BMI (Body Mass Index):\n"
             f"   - Low risk: 18.5 - 24.9\n"
             f"   - Moderate risk: 25 - 29.9\n"
             f"   - High risk: below 18.5 (underweight) or 30 and above (overweight/obese)\n\n"
-            f"2. *Blood Pressure*:\n"
+            f"2. Blood Pressure:\n"
             f"   - Low risk: Systolic (90-120 mm Hg) and Diastolic (60-80 mm Hg)\n"
             f"   - Moderate risk: Systolic (121-139 mm Hg) or Diastolic (81-89 mm Hg)\n"
             f"   - High risk: Systolic (140 mm Hg or higher) or Diastolic (90 mm Hg or higher)\n\n"
-            f"3. *Heart Rate*:\n"
+            f"3. Heart Rate:\n"
             f"   - Low risk: Resting heart rate of 60-100 bpm\n"
             f"   - Moderate risk: Resting heart rate of 101-110 bpm\n"
             f"   - High risk: Resting heart rate above 110 bpm\n\n"
             f"### Response Format\n"
             f"Please categorize the user's health status as follows:\n"
-            f"- *Risk Level (1: Low, 2: Moderate, 3: High)*: Provide a risk level based on an analysis of the user's BMI, blood pressure, and heart rate.\n"
-            f"- *Recommendation*: Provide brief advice based on the categorized risk level.\n\n"
+            f"- Risk Level (1: Low, 2: Moderate, 3: High): Provide a risk level based on an analysis of the user's BMI, blood pressure, and heart rate.\n"
+            f"- Recommendation: Provide brief advice based on the categorized risk level.\n\n"
             f"### Example Response\n"
             f"Risk Level: 2 (Moderate)\n"
             f"Recommendation: 'Your blood pressure and BMI are slightly elevated. Consider regular monitoring and lifestyle changes. Consultation with a healthcare provider is recommended for personalized advice.'\n\n"
