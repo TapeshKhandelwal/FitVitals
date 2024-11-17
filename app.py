@@ -29,21 +29,8 @@ def main():
     # Page configuration
     st.set_page_config(page_title="FitVitals", layout="centered")
 
-    # HTML/CSS to position the image at the top left
-    st.markdown(
-        """
-        <style>
-        .left-corner-image {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 100px;
-        }
-        </style>
-        <img src="FitVitalsLogo.jpg" class="left-corner-image">
-        """,
-        unsafe_allow_html=True
-    )
+    # Display the logo at the top of the page
+    st.image("FitVitalsLogo.jpg", width=100, use_column_width=False)
 
     # Application title (Positioned centrally below the image)
     st.title("FitVitals")
@@ -108,7 +95,7 @@ def main():
             f"""
             <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #333;">
                 <h2>Health Status Analysis & Recommendation</h2>
-                <p><strong>Risk Level:</strong> {response.get('risk_level', 'Not provided')}</p>
+                <p><strong>Risk Level:</strong> High</p>
                 <h3>Rationale:</h3>
                 <ul>
                     <li><strong>BMI:</strong> Calculated and analyzed.</li>
@@ -116,7 +103,7 @@ def main():
                     <li><strong>Heart Rate:</strong> Heart rate assessed.</li>
                 </ul>
                 <h3>Recommendation:</h3>
-                <p>{response.get('recommendation', 'Consult a healthcare provider for personalized advice.')}</p>
+                <p>{response}</p>
             </div>
             """,
             unsafe_allow_html=True
