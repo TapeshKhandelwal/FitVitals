@@ -30,25 +30,30 @@ def main():
     # Page configuration
     st.set_page_config(page_title="FitVitals", layout="centered")
 
-    # Display the logo at the top of the page
-    st.image("FitVitalsLogo.jpg", width=100, use_column_width=False)
+    # Create two columns: left for the image, right for inputs
+    col1, col2 = st.columns([1, 2])  # Adjust the proportions as needed
 
-    # Application title (Positioned centrally below the image)
-    st.title("FitVitals")
-    st.subheader("Your Daily Health Partner")
+    # Left column: Display the logo image
+    with col1:
+        st.image("FitVitalsLogo.jpg", width=100, use_column_width=False)
 
-    # Collect user inputs for health metrics
-    st.subheader("Enter Your Health Data")
-    age = st.number_input("Enter your age", min_value=0, max_value=120, step=1)
-    sex = st.selectbox("Select your sex", options=["Male", "Female"])
-    systolic_bp = st.number_input("Enter your systolic blood pressure (mm Hg)", min_value=0)
-    diastolic_bp = st.number_input("Enter your diastolic blood pressure (mm Hg)", min_value=0)
-    heart_rate = st.number_input("Enter your heart rate (bpm)", min_value=0)
-    weight = st.number_input("Enter your weight (kg)", min_value=0.0, format="%.1f")
-    height = st.number_input("Enter your height (cm)", min_value=0.0, format="%.1f")
-    
-    # Button to trigger health assessment
-    submit = st.button("Assess Health")
+    # Right column: Input fields and button
+    with col2:
+        st.title("FitVitals")
+        st.subheader("Your Daily Health Partner")
+        st.subheader("Enter Your Health Data")
+        
+        # Collect user inputs for health metrics
+        age = st.number_input("Enter your age", min_value=0, max_value=120, step=1)
+        sex = st.selectbox("Select your sex", options=["Male", "Female"])
+        systolic_bp = st.number_input("Enter your systolic blood pressure (mm Hg)", min_value=0)
+        diastolic_bp = st.number_input("Enter your diastolic blood pressure (mm Hg)", min_value=0)
+        heart_rate = st.number_input("Enter your heart rate (bpm)", min_value=0)
+        weight = st.number_input("Enter your weight (kg)", min_value=0.0, format="%.1f")
+        height = st.number_input("Enter your height (cm)", min_value=0.0, format="%.1f")
+
+        # Button to trigger health assessment
+        submit = st.button("Assess Health")
 
     # Calculate BMI if weight and height are provided
     bmi = weight / ((height / 100) ** 2) if height > 0 else None
@@ -129,6 +134,7 @@ def main():
             f"""
             <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #333;">
                 <h2>Health Status Analysis & Recommendation</h2>
+                <p><strong>Risk Level:</strong> High</p>
                 <h3>Rationale:</h3>
                 <ul>
                     <li><strong>BMI:</strong> Calculated and analyzed.</li>
