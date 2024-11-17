@@ -29,14 +29,27 @@ def main():
     # Page configuration
     st.set_page_config(page_title="FitVitals", layout="centered")
 
-    # Add an image at the top for a professional look
-    st.image("FitVitalsLogo.jpg", use_column_width=True)  # Ensure this file is in the same directory or provide a correct path
+    # HTML/CSS to position the image at the top left
+    st.markdown(
+        """
+        <style>
+        .left-corner-image {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100px;
+        }
+        </style>
+        <img src="FitVitalsLogo.jpg" class="left-corner-image">
+        """,
+        unsafe_allow_html=True
+    )
 
-    # Application title
+    # Application title (Positioned centrally below the image)
     st.title("FitVitals")
-    
-    # Collect user inputs for health metrics
     st.subheader("Your Daily Health Partner")
+
+    # Collect user inputs for health metrics
     st.subheader("Enter Your Health Data")
     age = st.number_input("Enter your age", min_value=0, max_value=120, step=1)
     sex = st.selectbox("Select your sex", options=["Male", "Female"])
