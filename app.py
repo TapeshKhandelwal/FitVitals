@@ -1,6 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 import os
+import pandas as pd
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -49,9 +50,32 @@ def main():
     # Button to trigger health assessment
     submit = st.button("Assess Health")
 
+    # Calculate BMI if weight and height are provided
+    bmi = weight / ((height / 100) ** 2) if height > 0 else None
+
     if submit:
-        # Calculate BMI if weight and height are provided
-        bmi = weight / ((height / 100) ** 2) if height > 0 else None
+        # Normal reference values
+        normal_values = {
+            "Parameter": ["Age", "Sex", "Systolic BP (mm Hg)", "Diastolic BP (mm Hg)", "Heart Rate (bpm)", "Weight (kg)", "Height (cm)", "BMI"],
+            "Normal Range": ["Varies", "Male/Female", "90-120", "60-80", "60-100", "Varies", "Varies", "18.5-24.9"],
+            "Patient Value": [
+                age,
+                sex,
+                systolic_bp,
+                diastolic_bp,
+                heart_rate,
+                weight,
+                height,
+                f"{bmi:.1f}" if bmi is not None else "N/A"
+            ]
+        }
+
+        # Create a DataFrame for displaying comparison
+        comparison_df = pd.DataFrame(normal_values)
+
+        # Display comparison table below the assessment button
+        st.subheader("Comparison of Patient Values Against Normal Ranges")
+        st.table(comparison_df)
 
         # Prepare the input prompt for the API
         input_prompt = f"""
