@@ -134,7 +134,6 @@ def main():
             f"""
             <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #333;">
                 <h2>Health Status Analysis & Recommendation</h2>
-                <p><strong>Risk Level:</strong> High</p>
                 <h3>Rationale:</h3>
                 <ul>
                     <li><strong>BMI:</strong> Calculated and analyzed.</li>
