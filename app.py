@@ -30,28 +30,27 @@ def main():
     # Page configuration
     st.set_page_config(page_title="FitVitals", layout="centered")
 
-    # HTML/CSS to style and position the logo image at the top
+    # Display the logo at the top of the page using st.image
+    # Adding some CSS styling to center the image and add padding
     st.markdown(
         """
         <style>
-        .container {
+        .image-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         .logo-image {
-            width: 120px;
-            height: auto;
+            width: 150px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         </style>
-        <div class="container">
-            <img src="FitVitalsLogo.jpg" class="logo-image">
+        <div class="image-container">
+            <img src="data:image/png;base64,{}" class="logo-image">
         </div>
-        """,
+        """.format(st.image("FitVitalsLogo.jpg", output_format="PNG").to_string()),
         unsafe_allow_html=True
     )
 
