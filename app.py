@@ -99,11 +99,28 @@ def main():
             f"Please analyze and provide a response following this format."
         )
 
-        # Get AI response and display it
+        # Get AI response
         response = get_gemini_response(input_prompt)
-        
+
+        # Display the formatted response
         st.header("Health Assessment Result")
-        st.write(response)
+        st.markdown(
+            f"""
+            <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #333;">
+                <h2>Health Status Analysis & Recommendation</h2>
+                <p><strong>Risk Level:</strong> {response.get('risk_level', 'Not provided')}</p>
+                <h3>Rationale:</h3>
+                <ul>
+                    <li><strong>BMI:</strong> Calculated and analyzed.</li>
+                    <li><strong>Blood Pressure:</strong> Systolic and diastolic values evaluated.</li>
+                    <li><strong>Heart Rate:</strong> Heart rate assessed.</li>
+                </ul>
+                <h3>Recommendation:</h3>
+                <p>{response.get('recommendation', 'Consult a healthcare provider for personalized advice.')}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 # Run the Streamlit app
 if __name__ == "__main__":
