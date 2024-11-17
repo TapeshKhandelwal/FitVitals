@@ -33,9 +33,10 @@ def main():
     st.image("FitVitalsLogo.jpg", use_column_width=True)  # Ensure this file is in the same directory or provide a correct path
 
     # Application title
-    st.title("Health Assessment Tool")
+    st.title("FitVitals")
     
     # Collect user inputs for health metrics
+    st.subheader("Your Daily Health Partner")
     st.subheader("Enter Your Health Data")
     age = st.number_input("Enter your age", min_value=0, max_value=120, step=1)
     sex = st.selectbox("Select your sex", options=["Male", "Female"])
