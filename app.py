@@ -27,7 +27,7 @@ def main():
     Main function to run the Health Assessment Tool application.
     """
     # Page configuration
-    st.set_page_config(page_title="Health Assessment Tool", layout="centered")
+    st.set_page_config(page_title="FitVitals", layout="centered")
     st.title("Health Assessment Tool")
     
     # Collect user inputs for health metrics
