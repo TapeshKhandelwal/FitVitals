@@ -83,7 +83,7 @@ def main():
     with st.container():
         col1, col2 = st.columns([1, 8])
         with col1:
-            st.image("FitVitalsLogo.jpg", width=120)  # Enlarged width for the logo
+            st.image("FitVitalsLogo.jpg", width=1200)  # Enlarged width for the logo
         with col2:
             st.markdown('<h1 class="header-title">FitVitals</h1>', unsafe_allow_html=True)
     
