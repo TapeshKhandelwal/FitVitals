@@ -35,7 +35,14 @@ def main():
 
     # Left column: Display the logo image
     with col1:
-        st.image("FitVitalsLogo.jpg", width=1000, use_column_width=False)
+        st.markdown(  
+        f"""  
+        <div style="text-align: left;">  
+            <img src="FitVitalsLogo.jpg" width="1000" />  
+        </div>  
+        """,  
+        unsafe_allow_html=True  
+    ) 
 
     # Right column: Input fields and button
     with col2:
