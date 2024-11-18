@@ -28,23 +28,60 @@ def main():
     Main function to run the Health Assessment Tool application.
     """
     # Page configuration
-    st.set_page_config(page_title="FitVitals", layout="centered")
+    st.set_page_config(page_title="FitVitals", layout="wide")
 
-    # Create two columns: left for the image, right for inputs
-    col1, col2 = st.columns([1, 2])  # Adjust the proportions as needed
+    # Apply custom CSS styles for better alignment and aesthetics
+    st.markdown("""
+    <style>
+        .main-container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subheader-title {
+            font-size: 1.2em;
+            color: #34495e;
+            text-align: center;
+        }
+        .data-section {
+            padding: 10px 20px;
+        }
+        .result-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #333;
+        }
+        .custom-table {
+            margin-top: 10px;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
-    # Left column: Display the logo image
-    with col1:
-        st.image("FitVitalsLogo.jpg", width=1000, use_column_width=False, caption=None, output_format='JPEG')  
-        st.markdown("<div style='text-align: left;'></div>", unsafe_allow_html=True)
+    # Main container
+    with st.container():
+        st.markdown('<div class="main-container">', unsafe_allow_html=True)
 
-    # Right column: Input fields and button
-    with col2:
-        st.title("FitVitals")
-        st.subheader("Your Daily Health Partner")
-        st.subheader("Enter Your Health Data")
-        
-        # Collect user inputs for health metrics
+        # Logo and Title
+        st.image("FitVitalsLogo.jpg", width=250, use_column_width=False)
+        st.markdown('<div class="header-title">FitVitals</div>', unsafe_allow_html=True)
+        st.markdown('<div class="subheader-title">Your Daily Health Partner</div>', unsafe_allow_html=True)
+
+        # Input section
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown('<div class="data-section">', unsafe_allow_html=True)
+
         age = st.number_input("Enter your age", min_value=0, max_value=120, step=1)
         sex = st.selectbox("Select your sex", options=["Male", "Female"])
         systolic_bp = st.number_input("Enter your systolic blood pressure (mm Hg)", min_value=0)
@@ -53,100 +90,62 @@ def main():
         weight = st.number_input("Enter your weight (kg)", min_value=0.0, format="%.1f")
         height = st.number_input("Enter your height (cm)", min_value=0.0, format="%.1f")
 
-        # Button to trigger health assessment
         submit = st.button("Assess Health")
 
-    # Calculate BMI if weight and height are provided
-    bmi = weight / ((height / 100) ** 2) if height > 0 else None
+        # Calculate BMI if weight and height are provided
+        bmi = weight / ((height / 100) ** 2) if height > 0 else None
 
-    if submit:
-        # Normal reference values
-        normal_values = {
-            "Parameter": ["Age", "Sex", "Systolic BP (mm Hg)", "Diastolic BP (mm Hg)", "Heart Rate (bpm)", "Weight (kg)", "Height (cm)", "BMI"],
-            "Normal Range": ["Varies", "Male/Female", "90-120", "60-80", "60-100", "Varies", "Varies", "18.5-24.9"],
-            "Patient Value": [
-                age,
-                sex,
-                systolic_bp,
-                diastolic_bp,
-                heart_rate,
-                weight,
-                height,
-                f"{bmi:.1f}" if bmi is not None else "N/A"
-            ]
-        }
+        if submit:
+            normal_values = {
+                "Parameter": ["Age", "Sex", "Systolic BP (mm Hg)", "Diastolic BP (mm Hg)", "Heart Rate (bpm)", "Weight (kg)", "Height (cm)", "BMI"],
+                "Normal Range": ["Varies", "Male/Female", "90-120", "60-80", "60-100", "Varies", "Varies", "18.5-24.9"],
+                "Patient Value": [
+                    age, sex, systolic_bp, diastolic_bp, heart_rate, weight, height, 
+                    f"{bmi:.1f}" if bmi is not None else "N/A"
+                ]
+            }
+            comparison_df = pd.DataFrame(normal_values)
+            st.subheader("Comparison of Patient Values Against Normal Ranges")
+            st.table(comparison_df.style.set_properties(**{'background-color': '#f9f9f9', 'border-color': 'black'}))
 
-        # Create a DataFrame for displaying comparison
-        comparison_df = pd.DataFrame(normal_values)
+            input_prompt = f"""
+            You are a professional healthcare advisor. Based on the provided health parameters, categorize the user's health status into risk levels and provide a recommendation.
 
-        # Display comparison table below the assessment button
-        st.subheader("Comparison of Patient Values Against Normal Ranges")
-        st.table(comparison_df)
+            User's Health Parameters:
+            - Age: {age}
+            - Sex: {sex}
+            - Systolic Blood Pressure: {systolic_bp} mm Hg
+            - Diastolic Blood Pressure: {diastolic_bp} mm Hg
+            - Heart Rate: {heart_rate} bpm
+            - Weight: {weight} kg
+            - Height: {height} cm
+            - BMI: {f"{bmi:.1f}" if bmi is not None else "N/A"}
 
-        # Prepare the input prompt for the API
-        input_prompt = f"""
-        You are a professional healthcare advisor. Based on the provided health parameters, categorize the user's health status into risk levels and provide a recommendation.
+            ### Health Status Categorization
+            1. *BMI*: Low risk: 18.5 - 24.9, Moderate: 25 - 29.9, High: <18.5 or >30
+            2. *Blood Pressure*: Low risk: 90-120/60-80, Moderate: 121-139/81-89, High: 140+/90+
+            3. *Heart Rate*: Low risk: 60-100 bpm, Moderate: 101-110 bpm, High: >110 bpm
 
-        User's Health Parameters:
-        - Age: {age}
-        - Sex: {sex}
-        - Systolic Blood Pressure: {systolic_bp} mm Hg
-        - Diastolic Blood Pressure: {diastolic_bp} mm Hg
-        - Heart Rate: {heart_rate} bpm
-        - Weight: {weight} kg
-        - Height: {height} cm
-        - BMI: {f"{bmi:.1f}" if bmi is not None else "N/A"}
+            ### Format
+            - *Risk Level*: (1: Low, 2: Moderate, 3: High)
+            - *Recommendation*: Brief advice based on risk level.
+            """
+            response = get_gemini_response(input_prompt)
 
-        ### Health Status Categorization
-        Define the user's health status risk level based on the following criteria:
-        1. *BMI (Body Mass Index)*:
-           - Low risk: 18.5 - 24.9
-           - Moderate risk: 25 - 29.9
-           - High risk: below 18.5 (underweight) or 30 and above (overweight/obese)
-
-        2. *Blood Pressure*:
-           - Low risk: Systolic (90-120 mm Hg) and Diastolic (60-80 mm Hg)
-           - Moderate risk: Systolic (121-139 mm Hg) or Diastolic (81-89 mm Hg)
-           - High risk: Systolic (140 mm Hg or higher) or Diastolic (90 mm Hg or higher)
-
-        3. *Heart Rate*:
-           - Low risk: Resting heart rate of 60-100 bpm
-           - Moderate risk: Resting heart rate of 101-110 bpm
-           - High risk: Resting heart rate above 110 bpm
-
-        ### Response Format
-        Please categorize the user's health status as follows:
-        - *Risk Level (1: Low, 2: Moderate, 3: High)*: Provide a risk level based on an analysis of the user's BMI, blood pressure, and heart rate.
-        - *Recommendation*: Provide brief advice based on the categorized risk level.
-
-        ### Example Response
-        Risk Level: 2 (Moderate)
-        Recommendation: "Your blood pressure and BMI are slightly elevated. Consider regular monitoring and lifestyle changes. Consultation with a healthcare provider is recommended for personalized advice."
-
-        Please analyze and provide a response following this format.
-        """
-
-        # Get AI response
-        response = get_gemini_response(input_prompt)
-
-        # Display the formatted response
-        st.header("Health Assessment Result")
-        st.markdown(
-            f"""
-            <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #333;">
+            st.markdown('<div class="result-box">', unsafe_allow_html=True)
+            st.header("Health Assessment Result")
+            st.markdown(
+                f"""
                 <h2>Health Status Analysis & Recommendation</h2>
-                <h3>Rationale:</h3>
-                <ul>
-                    <li><strong>BMI:</strong> Calculated and analyzed.</li>
-                    <li><strong>Blood Pressure:</strong> Systolic and diastolic values evaluated.</li>
-                    <li><strong>Heart Rate:</strong> Heart rate assessed.</li>
-                </ul>
-                <h3>Recommendation:</h3>
                 <p>{response}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+                """,
+                unsafe_allow_html=True
+            )
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Run the Streamlit app
 if __name__ == "__main__":
