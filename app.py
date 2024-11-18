@@ -22,13 +22,13 @@ def get_gemini_response(input_prompt):
 # Streamlit UI setup
 def main():
     # Page configuration
-    st.set_page_config(page_title="FitVitals", layout="wide")
+    st.set_page_config(page_title="FitVitals", layout="centered")
 
     # Apply custom CSS styles for better alignment and aesthetics
     st.markdown("""
     <style>
         .main-container {
-            max-width: 800px;
+            max-width: 600px;
             margin: auto;
             padding: 10px;
             background-color: #ffffff;
@@ -38,7 +38,7 @@ def main():
         .header-section {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -52,9 +52,10 @@ def main():
             font-size: 1.2em;
             color: #34495e;
             text-align: center;
+            margin-bottom: 20px;
         }
         .data-section {
-            max-width: 600px;
+            max-width: 500px;
             margin: auto;
             padding: 20px;
             background-color: #f9f9f9;
@@ -80,7 +81,7 @@ def main():
 
         # Header section with logo and title
         st.markdown('<div class="header-section">', unsafe_allow_html=True)
-        st.image("FitVitalsLogo.jpg", width=100)  # Set smaller width for the logo
+        st.image("FitVitalsLogo.jpg", width=80)  # Smaller width for the logo
         st.markdown('<h1 class="header-title">FitVitals</h1>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('<div class="subheader-title">Your Daily Health Partner</div>', unsafe_allow_html=True)
