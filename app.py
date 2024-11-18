@@ -52,7 +52,8 @@ def main():
             font-size: 1.2em;
             color: #34495e;
             text-align: center;
-            margin: 5px 0 15px 0; /* Minimized top and bottom margin */
+            margin: 5px 0 0px 0; /* Reduced bottom margin to 0 */
+            padding: 0px; /* Remove padding */
         }
         .data-section {
             max-width: 500px;
