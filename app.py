@@ -12,9 +12,6 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Function to get the response from the generative AI model
 def get_gemini_response(input_prompt):
-    """
-    Interacts with the Gemini AI model to generate a response.
-    """
     try:
         model = genai.GenerativeModel('gemini-1.5-pro-exp-0801')
         response = model.generate_content([input_prompt])
@@ -24,9 +21,6 @@ def get_gemini_response(input_prompt):
 
 # Streamlit UI setup
 def main():
-    """
-    Main function to run the Health Assessment Tool application.
-    """
     # Page configuration
     st.set_page_config(page_title="FitVitals", layout="wide")
 
@@ -41,12 +35,18 @@ def main():
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .header-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
         .header-title {
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: bold;
             color: #2c3e50;
-            text-align: center;
-            margin-bottom: 5px;
+            margin: 0;
         }
         .subheader-title {
             font-size: 1.2em;
@@ -66,12 +66,6 @@ def main():
         .custom-table {
             margin-top: 10px;
         }
-        .logo-image {
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            margin-bottom: -30px;
-        }
     </style>
     """, unsafe_allow_html=True)
 
@@ -79,18 +73,18 @@ def main():
     with st.container():
         st.markdown('<div class="main-container">', unsafe_allow_html=True)
 
-        # Logo and Title in top-left corner
-        st.markdown('<div class="logo-image">', unsafe_allow_html=True)
-        st.image("FitVitalsLogo.jpg", width=100, use_column_width=False)  # Set smaller width
+        # Header section with logo and title
+        st.markdown('<div class="header-section">', unsafe_allow_html=True)
+        st.image("FitVitalsLogo.jpg", width=100)  # Set smaller width for the logo
+        st.markdown('<h1 class="header-title">FitVitals</h1>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
-
-        st.markdown('<div class="header-title">FitVitals</div>', unsafe_allow_html=True)
         st.markdown('<div class="subheader-title">Your Daily Health Partner</div>', unsafe_allow_html=True)
 
         # Input section
         st.markdown("<hr>", unsafe_allow_html=True)
         st.markdown('<div class="data-section">', unsafe_allow_html=True)
 
+        # Input fields
         age = st.number_input("Enter your age", min_value=0, max_value=120, step=1)
         sex = st.selectbox("Select your sex", options=["Male", "Female"])
         systolic_bp = st.number_input("Enter your systolic blood pressure (mm Hg)", min_value=0)
@@ -99,12 +93,14 @@ def main():
         weight = st.number_input("Enter your weight (kg)", min_value=0.0, format="%.1f")
         height = st.number_input("Enter your height (cm)", min_value=0.0, format="%.1f")
 
+        # Button to trigger health assessment
         submit = st.button("Assess Health")
 
         # Calculate BMI if weight and height are provided
         bmi = weight / ((height / 100) ** 2) if height > 0 else None
 
         if submit:
+            # Display comparison table
             normal_values = {
                 "Parameter": ["Age", "Sex", "Systolic BP (mm Hg)", "Diastolic BP (mm Hg)", "Heart Rate (bpm)", "Weight (kg)", "Height (cm)", "BMI"],
                 "Normal Range": ["Varies", "Male/Female", "90-120", "60-80", "60-100", "Varies", "Varies", "18.5-24.9"],
@@ -141,6 +137,7 @@ def main():
             """
             response = get_gemini_response(input_prompt)
 
+            # Display the formatted response
             st.markdown('<div class="result-box">', unsafe_allow_html=True)
             st.header("Health Assessment Result")
             st.markdown(
