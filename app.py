@@ -40,7 +40,7 @@ def main():
             flex-direction: column;
             align-items: center;
             gap: 5px;
-            margin: 0px; /* Remove extra space */
+            margin: 0px;
         }
         .header-title {
             font-size: 2em;
@@ -52,7 +52,7 @@ def main():
             font-size: 1.2em;
             color: #34495e;
             text-align: center;
-            margin-top: -10px; /* Move closer to remove gap */
+            margin-top: -15px; /* Further reduce top margin */
             padding-bottom: 0px;
         }
         .data-section {
@@ -79,11 +79,11 @@ def main():
     # Main container
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
 
-    # Header section with logo and title
+    # Header section with enlarged logo and title
     with st.container():
         col1, col2 = st.columns([1, 8])
         with col1:
-            st.image("FitVitalsLogo.jpg", width=80)  # Ensure the logo loads correctly
+            st.image("FitVitalsLogo.jpg", width=120)  # Enlarged width for the logo
         with col2:
             st.markdown('<h1 class="header-title">FitVitals</h1>', unsafe_allow_html=True)
     
