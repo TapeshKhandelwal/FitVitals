@@ -34,7 +34,7 @@ def main():
     st.markdown("""
     <style>
         .main-container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: auto;
             padding: 10px;
             background-color: #ffffff;
@@ -46,7 +46,7 @@ def main():
             font-weight: bold;
             color: #2c3e50;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         .subheader-title {
             font-size: 1.2em;
@@ -66,6 +66,12 @@ def main():
         .custom-table {
             margin-top: 10px;
         }
+        .logo-image {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin-bottom: -30px;
+        }
     </style>
     """, unsafe_allow_html=True)
 
@@ -73,8 +79,11 @@ def main():
     with st.container():
         st.markdown('<div class="main-container">', unsafe_allow_html=True)
 
-        # Logo and Title
-        st.image("FitVitalsLogo.jpg", width=250, use_column_width=False)
+        # Logo and Title in top-left corner
+        st.markdown('<div class="logo-image">', unsafe_allow_html=True)
+        st.image("FitVitalsLogo.jpg", width=100, use_column_width=False)  # Set smaller width
+        st.markdown('</div>', unsafe_allow_html=True)
+
         st.markdown('<div class="header-title">FitVitals</div>', unsafe_allow_html=True)
         st.markdown('<div class="subheader-title">Your Daily Health Partner</div>', unsafe_allow_html=True)
 
