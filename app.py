@@ -52,8 +52,7 @@ def main():
             font-size: 1.2em;
             color: #34495e;
             text-align: center;
-            margin: 5px 0 0px 0; /* Reduced bottom margin to 0 */
-            padding: 0px; /* Remove padding */
+            margin-top: -10px; /* Move closer to remove gap */
         }
         .data-section {
             max-width: 500px;
@@ -80,13 +79,16 @@ def main():
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
 
     # Header section with logo and title
-    st.markdown('<div class="header-section">', unsafe_allow_html=True)
-    st.image("FitVitalsLogo.jpg", width=80)  # Smaller width for the logo
-    st.markdown('<h1 class="header-title">FitVitals</h1>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Subheader with minimized spacing
-    st.markdown('<div class="subheader-title">Your Daily Health Partner</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="header-section">
+            <img src="FitVitalsLogo.jpg" width="80">
+            <h1 class="header-title">FitVitals</h1>
+        </div>
+        <h2 class="subheader-title">Your Daily Health Partner</h2>
+        """,
+        unsafe_allow_html=True
+    )
 
     # Input section centered and limited in width
     st.markdown('<div class="data-section">', unsafe_allow_html=True)
