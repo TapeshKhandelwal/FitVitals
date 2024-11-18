@@ -40,7 +40,7 @@ def main():
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Reduced to minimize extra space */
         }
         .header-title {
             font-size: 2em;
@@ -52,7 +52,7 @@ def main():
             font-size: 1.2em;
             color: #34495e;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Reduced to minimize extra space */
         }
         .data-section {
             max-width: 500px;
@@ -84,6 +84,8 @@ def main():
         st.image("FitVitalsLogo.jpg", width=80)  # Smaller width for the logo
         st.markdown('<h1 class="header-title">FitVitals</h1>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Subheader without extra spacing
         st.markdown('<div class="subheader-title">Your Daily Health Partner</div>', unsafe_allow_html=True)
 
         # Input section centered and limited in width
