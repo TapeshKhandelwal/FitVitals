@@ -54,7 +54,12 @@ def main():
             text-align: center;
         }
         .data-section {
-            padding: 10px 20px;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
         .result-box {
             background-color: #f5f5f5;
@@ -80,8 +85,7 @@ def main():
         st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('<div class="subheader-title">Your Daily Health Partner</div>', unsafe_allow_html=True)
 
-        # Input section
-        st.markdown("<hr>", unsafe_allow_html=True)
+        # Input section centered and limited in width
         st.markdown('<div class="data-section">', unsafe_allow_html=True)
 
         # Input fields
@@ -93,7 +97,6 @@ def main():
         weight = st.number_input("Enter your weight (kg)", min_value=0.0, format="%.1f")
         height = st.number_input("Enter your height (cm)", min_value=0.0, format="%.1f")
 
-        # Button to trigger health assessment
         submit = st.button("Assess Health")
 
         # Calculate BMI if weight and height are provided
