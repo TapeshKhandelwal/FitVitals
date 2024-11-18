@@ -35,7 +35,7 @@ def main():
 
     # Left column: Display the logo image
     with col1:
-        st.image("FitVitalsLogo.jpg", width=10, use_column_width=False)
+        st.image("FitVitalsLogo.jpg", width=1000, use_column_width=False)
 
     # Right column: Input fields and button
     with col2:
