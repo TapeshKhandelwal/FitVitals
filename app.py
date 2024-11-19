@@ -125,8 +125,31 @@ def main():
         }
         comparison_df = pd.DataFrame(normal_values)
         st.subheader("Comparison of Patient Values Against Normal Ranges")
-        st.table(comparison_df.style.set_properties(**{'background-color': '#f9f9f9', 'border-color': 'black'}))
+        #st.table(comparison_df.style.set_properties(**{'background-color': '#f9f9f9', 'border-color': 'black'}))
+        styled_table = comparison_df.style.set_table_styles(
+            [
+                {"selector": "thead", "props": [("background-color", "#2c3e50"), ("color", "white"), ("font-weight", "bold")]},
+                {"selector": "tbody tr:nth-child(even)", "props": [("background-color", "#f2f2f2")]},
+                {"selector": "tbody tr:nth-child(odd)", "props": [("background-color", "#ffffff")]},
+                {"selector": "td", "props": [("border", "1px solid #ddd"), ("text-align", "center")]},
+                {"selector": "th", "props": [("border", "1px solid #ddd"), ("text-align", "center")]}
+            ]
+        ).set_properties(**{"color": "#34495e", "border": "1px solid #ddd", "text-align": "center"})
 
+# Render the styled table in Streamlit
+        st.markdown(
+            """
+            <style>
+                table {
+                    margin: auto;
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.write(styled_table.to_html(), unsafe_allow_html=True)
         input_prompt = f"""
         You are a professional healthcare advisor. Based on the provided health parameters, categorize the user's health status into risk levels and provide a recommendation.
 
