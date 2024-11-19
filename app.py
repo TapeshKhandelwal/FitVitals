@@ -97,7 +97,7 @@ def main():
     st.markdown('<h2 class="subheader-title">Your Daily Health Partner</h2>', unsafe_allow_html=True)
 
     # Input section centered and limited in width
-    st.markdown('<div class="data-section">', unsafe_allow_html=True)
+    #st.markdown('<div class="data-section">', unsafe_allow_html=True)
 
     # Input fields
     age = st.number_input("Enter your age", min_value=0, max_value=120, step=1)
